@@ -1,35 +1,45 @@
 package com.guilhermef.br.responseDTOs;
 
-import jakarta.validation.constraints.NotEmpty;
+import com.guilhermef.br.entities.Setor;
 
-
-
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 
 public class FuncionarioResponse {
-	
-	@NotEmpty
-	private String nome;
-	
-	private Long idFuncionario;
-	
-	@NotEmpty
-	private String github;
-	
-	@NotEmpty
-	private String cargo;
-	
-	
 
-	public FuncionarioResponse(@NotEmpty String nome, Long idFuncionario, @NotEmpty String github,
-			@NotEmpty String cargo) {
+	@NotBlank
+	private String nome;
+
+	private Long idFuncionario;
+
+	@NotBlank
+	private String github;
+
+	@NotBlank
+	private String cargo;
+
+	@OneToOne
+	private Setor setor;
+
+	public FuncionarioResponse(@NotBlank String nome, Long idFuncionario, @NotBlank String github,
+			@NotBlank String cargo, Setor setor) {
 		this.nome = nome;
 		this.idFuncionario = idFuncionario;
 		this.github = github;
 		this.cargo = cargo;
+		this.setor = setor;
 	}
 
 	public FuncionarioResponse() {
-		
+
+	}
+
+	public Setor getSetor() {
+		return setor;
+	}
+
+	public void setSetor(Setor setor) {
+		this.setor = setor;
 	}
 
 	public String getNome() {
@@ -63,6 +73,5 @@ public class FuncionarioResponse {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-	
-	
+
 }

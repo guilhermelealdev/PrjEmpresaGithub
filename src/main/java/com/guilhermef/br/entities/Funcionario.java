@@ -6,45 +6,60 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name="tb_funcionarios")
+@Table(name = "tb_funcionarios")
 public class Funcionario {
-	
-	@NotEmpty
+
+	@NotBlank
 	private String nome;
-	
+
 	@Email
 	private String email;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idFuncionario;
-	
+
 	@NotEmpty
 	private String github;
-	
+
 	@DateTimeFormat
-	@NotEmpty
+	@NotBlank
 	private String ultimoCheckIn;
-	
-	@NotEmpty
+
+	@NotBlank
 	private String cargo;
+
+	@OneToOne
+	@NotBlank
+	private Setor setor;
 
 	public Funcionario() {
 	}
 
-	public Funcionario(@NotEmpty String nome, @Email String email, Long idFuncionario, @NotEmpty String github,
-			@NotEmpty String ultimoCheckIn, @NotEmpty String cargo) {
+	public Funcionario(@NotBlank String nome, @Email String email, Long idFuncionario, @NotEmpty String github,
+			@NotBlank String ultimoCheckIn, @NotBlank String cargo, @NotBlank Setor setor) {
 		this.nome = nome;
 		this.email = email;
 		this.idFuncionario = idFuncionario;
 		this.github = github;
 		this.ultimoCheckIn = ultimoCheckIn;
 		this.cargo = cargo;
+		this.setor = setor;
+	}
+
+	public Setor getSetor() {
+		return setor;
+	}
+
+	public void setSetor(Setor setor) {
+		this.setor = setor;
 	}
 
 	public String getNome() {
@@ -94,7 +109,5 @@ public class Funcionario {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-	
-	
-	
+
 }

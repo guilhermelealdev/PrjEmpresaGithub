@@ -30,10 +30,12 @@ public class FuncionarioService {
 		funcionario.setEmail(dto.getEmail());
 		funcionario.setGithub(dto.getGithub());
 		funcionario.setCargo(dto.getCargo());
+		funcionario.setSetor(dto.getSetor());
 
 		Funcionario salvo = funcionarioRepository.save(funcionario);
 
-		return new FuncionarioResponse(salvo.getNome(), salvo.getIdFuncionario(), salvo.getGithub(), salvo.getCargo());
+		return new FuncionarioResponse(salvo.getNome(), salvo.getIdFuncionario(), salvo.getGithub(), salvo.getCargo(),
+				dto.getSetor());
 	}
 
 	public void deletar(Long id) {
@@ -45,14 +47,14 @@ public class FuncionarioService {
 				.orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
 
 		return new FuncionarioResponse(funcionario.getNome(), funcionario.getIdFuncionario(), funcionario.getGithub(),
-				funcionario.getCargo());
+				funcionario.getCargo(), funcionario.getSetor());
 
 	}
 
 	public List<FuncionarioResponse> listar() {
-		return funcionarioRepository
-				.findAll().stream().map(funcionario -> new FuncionarioResponse(funcionario.getNome(),
-						funcionario.getIdFuncionario(), funcionario.getGithub(), funcionario.getCargo()))
+		return funcionarioRepository.findAll().stream()
+				.map(funcionario -> new FuncionarioResponse(funcionario.getNome(), funcionario.getIdFuncionario(),
+						funcionario.getGithub(), funcionario.getCargo(), funcionario.getSetor()))
 				.collect(Collectors.toList());
 	}
 
@@ -65,13 +67,14 @@ public class FuncionarioService {
 			funcionario.setEmail(funcionarioAtualizado.getEmail());
 			funcionario.setGithub(funcionarioAtualizado.getGithub());
 			funcionario.setCargo(funcionarioAtualizado.getCargo());
+			funcionario.setSetor(funcionarioAtualizado.getSetor());
 
 			return funcionarioRepository.save(funcionario);
 		}
 		return null;
 
 	}
-	
+
 	public Funcionario checkIn(Long id) {
 		Optional<Funcionario> funcionarioOptional = funcionarioRepository.findById(id);
 
